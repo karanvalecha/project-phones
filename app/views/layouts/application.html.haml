@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %script{:type => "text/javascript", src: "https://www.google.com/jsapi"}
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title ProjectPhones
+
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1"}
+  %body
+    = yield
+    =debug(params)
