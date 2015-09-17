@@ -1,53 +1,15 @@
-// jQuery ->
-//   # React.render((React.createElement(HelloMessage, {name: 'John'})), $('#feed'))
-//   feed = new google.feeds.Feed("http://www.gsmarena.com/rss-news-reviews.php3")
-//   feed.load (result) ->
-//     @entries = result.feed.entries
-//     # for res in result.feed.entries
-//     React.render(React.createElement(HelloMessage, {name: @entries}), document.getElementById("feed"))
-//     alert(res.content)
-// DOM = React.DOM
-// @Models = React.createClass
-//   models: ->
-//    m = @props.models
-//   getInitialState: ->
-//     name: @props.models || "Error"
-//   displayName: 'Models'
-//   render: ->
-//     models = @props.models
-//     DOM.div
-//       className: "jumbotron"
-//     for model in models
-//       DOM.div
-//         className: 'media'
-//         DOM.img
-//           className: 'media-object pull-left'
-//           alt: "img"
-//           src: model.img
-//         DOM.div
-//           className: "media-body"
-//           DOM.h2
-//             className: 'media-heading'
-//             model.name
-//           DOM.p
-//             className: 'jumbotron'
-//             model.title
-// @HelloMessage = React.createClass
-//   displayName: 'HelloMessage'
-//   render: ->
-//     React.createElement('div', null, 'Hello ', @props.name)
 function createMarkup(param) { return {__html: param}; };
 
 var SwfButton = React.createClass({
   click: function(){
-    $("#myModal").modal();
-    $(".modal-title").html(this.props.title);
+    $(".modal-title").html(this.props.title + " (Creedits: GSMArena)");
     $(".modal-body").html("<center><embed src='"+this.props.src+"'></embed></center>");
+    $("#myModal").modal();
   },
   render: function(){
     var x = null
     if(this.props.src){
-      x = <button onClick={this.click} className="btn btn-md btn-info" title={this.props.title}>{this.props.title}</button>;
+      x = <button onClick={this.click} className="btn btn-md btn-success" title={this.props.title}>{this.props.title}</button>;
     }
     else{
       x = <button className="btn btn-md btn-disabled" title="Unavailable">{this.props.title}</button>;
@@ -61,13 +23,13 @@ var MainFeaturesButton = React.createClass({
     $("#myModal").modal();
     $(".modal-title").html(this.props.title);
     $(".modal-body").html(this.props.features);
-        $(".modal-body > ul").attr("class", "list-group");
-    $(".modal-body > ul > li").attr("class", "list-group-item");
+    $(".modal-body ul").attr("class", "list-group");
+    $(".modal-body ul > li").attr("class", "list-group-item");
   },
   render: function(){
     var x = null
     if(this.props.features){
-      x = <button onClick={this.click} className="btn btn-md btn-success" title={this.props.title}>{this.props.title}</button>;
+      x = <button onClick={this.click} className="btn btn-md btn-info" title={this.props.title}>{this.props.title}</button>;
     }else{
       x = <button className="btn btn-md btn-disabled" title="Unavailable">Key Features</button>;
     }
@@ -137,30 +99,40 @@ var ListItemWrapper = React.createClass({
   }
 });
 var Models = React.createClass({
-  reset:function(){
-    $('html, body').animate({ scrollTop: $("#img").offset().top });
-    this.setProps({models: this.props.models.slice(0,3)});
-    $("#showLess").toggle();
-    $("#hmm").toggle();
-    $("#img").toggle();
-  },
+
   componentDidUpdate: function(){
-    $('html, body').animate({ scrollTop: $("#findButton").offset().top }, 1000);
+    var x = this;
+    $(window).on("scroll",function(){
+      if($(window).scrollTop() > $("#load").offset().top - $(window).height()*1.3){
+        x.fullLoad();
+      }
+    });
+  },
+  componentDidMount: function(){
+    var x = this;
+    x.fullLoad();
+    $(window).on("scroll",function(){
+      if($(window).scrollTop() > $("#load").offset().top - $(window).height()*1.3){
+        x.fullLoad();
+      }
+    });
   },
   fullLoad: function(e){
-    // $("#hmm").hide();
   // $('#myModal').modal();
-  $("#showLess").toggle();
-  $("#hmm").toggle();
   $("#img").toggle();
+  $(window).off("scroll");
   var jqxhr = $.ajax({
     url: "all_json",
+    data: "&offset=" + this.props.models.length,
     dataType: 'json',
     cache: true,
     success: function(models){
-      this.setProps({models: models})
-      // $("#myModalLabel").html("All Phones")
-      // React.render(<Models models={models} />, document.getElementsByClassName("modal-body")[0]);
+      if(models.length > 0){
+      this.setProps({models: this.props.models.concat(models)});
+    }else{
+      $("#img").before("<center>--No more phones to show--</center>");
+      $("#img").hide();
+    }
     }.bind(this)
   });
   },
@@ -168,8 +140,8 @@ var Models = React.createClass({
     return (
       <div>
         <Modal />
+        <h2 className="text-center"><span className="label label-info" >Trending SmartPhones&#8628;</span></h2>
         <div className="panel panel-info">
-        <center className="panel-heading">Popular Phones<input className="badge" type="button" hidden id="showLess" onClick={this.reset} value="Undo" /></center>
         <div className="panel-body">
       <ol>
         {this.props.models.map(function(result) {
@@ -177,9 +149,9 @@ var Models = React.createClass({
         })}
       </ol>
       </div>
-      <center id="img" hidden><img src='http://preloaders.net/preloaders/499/Balls%20parade.gif' /></center>
-      <center id="hmm"><button className="badge" onClick={this.fullLoad}>Show All Phones</button></center>
+      <center id="img"><img src='http://preloaders.net/preloaders/499/Balls%20parade.gif' /></center>
       </div>
+      <hr id="load" />
       </div>
     );
   }
@@ -192,8 +164,8 @@ var Modal = React.createClass({
         <div className="modal fade modal-fullscreen modal-transparent" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
-              <div className="modal-header info">
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <div className="modal-header">
+                <button type="button" className="clo btn btn-danger pull-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <center className="modal-title" id="myModalLabel">...</center>
               </div>
               <div className="modal-body">

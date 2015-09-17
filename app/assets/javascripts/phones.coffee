@@ -20,7 +20,7 @@ initialize = ->
         car_inner.append("<a class='item' href='#{entries[res].link}' >#{entries[res].title}</a>")
     $("#myCarousel").carousel()
     $("#loading").remove();
-  setInterval(animateBtn, 4000)
+  setInterval(animateBtn, 10000)
 google.setOnLoadCallback(initialize)
 
 animateBtn = ->

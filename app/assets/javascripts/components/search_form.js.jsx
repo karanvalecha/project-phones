@@ -8,7 +8,7 @@ render: function(){
     <div className="col-xs-8">
     <div className='radio'>
       <input required type="radio" name="media_user" id="media_user_0" value="0" />
-      <label htmlFor="media_user">I don&#39;t care</label>
+      <label htmlFor="media_user">I don&#39;t use a SmartPhone&#39;s camera!</label>
     </div>
     <div className='radio'>
       <input type="radio" name="media_user" id="media_user_1" value="1" />
@@ -27,7 +27,7 @@ render: function(){
     <div className="col-xs-8">
     <div className='radio'>
       <input required type="radio" name="game_user" id="game_user_0" value="0" />
-      <label htmlFor="game_user">Nope</label>
+      <label htmlFor="game_user">Very rare</label>
     </div>
     <div className='radio'>
       <input type="radio" name="game_user" id="game_user_1" value="1" />
@@ -40,6 +40,7 @@ render: function(){
     </div>
     </div>
     </fieldset>
+
     <fieldset>
     <div className="form-group">
     <label className="col-xs-4 control-label">How often you operate your phone?</label>
@@ -59,6 +60,7 @@ render: function(){
     </div>
     </div>
     </fieldset>
+
     <fieldset>
     <div className="form-group">
     <label className="col-xs-4 control-label">Anything specific required?</label>
@@ -67,28 +69,22 @@ render: function(){
     </span>
     </div>
     </fieldset>
+    <fieldset>
+    <div className="form-group">
+    <label className="col-xs-4 control-label">Max price if any?(&#8377;)</label>
+    <span className="col-xs-8">
+    <input className="form-control" placeholder="Rs." type="number" name="price" />
+    </span>
+    </div>
+    </fieldset>
+
     <input className="btn btn-primary" type="submit" value="search" />
     <input type="button" onClick={function(){$("#myForm, #findButton").toggle();}} className="btn" value="Cancel" />
   </form>
-  <center className="jumbotron"><button className="btn btn-success" id="findButton" onClick={function(){$("#myForm, #findButton").toggle();}}>Suggest me a phone!</button></center>
+  <h3 className="text-center">< hr /><button className="label label-warning" id="findButton" onClick={function(){$("#myForm, #findButton").toggle();}}>Suggest me a phone!</button><hr/></h3>
   </div>);
 }
 });
-
-// window.onload=function(){
-//   $("#myForm").on("submit", function(e){
-//   e.preventDefault();
-//   var data = $('#myForm').serialize();
-//   var jqxhr = $.ajax({
-//     url: "/search",
-//     data: data,
-//     success: function(models){
-//       SearchModels.setProps({models: models});
-//     }
-//   });
-// });
-// };
-
 
 var SearchModels = React.createClass({
   reset:function() {
@@ -136,7 +132,7 @@ var SearchModels = React.createClass({
     return (
       <div>
       <div className="panel panel-success">
-      <center className="panel-heading">Look what I found!<button className="btn btn-link btn-block" onClick={this.reset} > Clear these results </button></center>
+      <center className="panel-heading"><h3>Look what I found!</h3><button className="btn btn-link btn-block" onClick={this.reset} > Clear these results </button></center>
       <div className="panel-body">
       <ol>
         {this.props.models.map(function(result) {
@@ -144,7 +140,7 @@ var SearchModels = React.createClass({
         })}
       </ol>
       </div>
-      <center><button className="btn btn-link btn-block" onClick={this.reset} > Clear these results </button></center>
+      <center><button className="btn btn-danger" onClick={this.reset} > Clear these results </button></center>
       </div>
       </div>
     );

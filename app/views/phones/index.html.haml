@@ -8,42 +8,4 @@
 
   = react_component("SearchModels", {models: nil})
 
-  = react_component('Models', {models: @models})
-
-  / %button{onClick: "$('#myFor').show()"} Hello
-  / = form_tag("/search", hidden: true, class: 'form', id: 'myFor', method: "get") do
-  /   %h3 How much camera is useful to you?
-  /   .radio
-  /     =radio_button_tag :media_user, 0
-  /     =label_tag :media_user, "I don't care"
-  /   .radio
-  /     =radio_button_tag :media_user, 1
-  /     =label_tag :media_user, "I just need a decent camera!", value: 1
-  /   .radio
-  /     =radio_button_tag :media_user, 2
-  /     =label_tag :media_user, "I need a camera + media rich phone"
-
-  /   %h3 You like playing games on phone?
-  /   .radio
-  /     =radio_button_tag :game_user, 0
-  /     =label_tag :game_user, "Nope"
-  /   .radio
-  /     =radio_button_tag :game_user, 1
-  /     =label_tag :game_user, "Ocassionally", value: 1
-  /   .radio
-  /     =radio_button_tag :game_user, 2
-  /     =label_tag :game_user, "I need a phone which can handle haevy gaming"
-
-  /   %h3 How often you operate your phone?
-  /   .radio
-  /     =radio_button_tag :multitask_user, 0
-  /     =label_tag :multitask_user, "Answering calls and sending texts."
-  /   .radio
-  /     =radio_button_tag :multitask_user, 1
-  /     =label_tag :multitask_user, "I play and browse sometimes on the phone!", value: 1
-  /   .radio
-  /     =radio_button_tag :multitask_user, 2
-  /     =label_tag :multitask_user, "I am always on Instant Messaging services and browsing and reading on my pone"
-  /   =submit_tag "search", name: nil
-
-/ http://www.flipkart.com/mobiles/apple~brand/~iphone-6/pr?sid=tyy%2C4io
+  = react_component('Models', {models: []})

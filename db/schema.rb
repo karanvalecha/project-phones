@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150830195009) do
+ActiveRecord::Schema.define(version: 20150917102414) do
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20150830195009) do
     t.integer  "brand_id"
     t.string   "url"
     t.string   "img"
-    t.integer  "popularity",    default: 0
+    t.float    "popularity",    default: 0.0
     t.integer  "price",         default: 0
     t.integer  "size",          default: 0
     t.integer  "camera",        default: 0

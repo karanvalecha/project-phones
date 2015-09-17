@@ -43,9 +43,12 @@ namespace :phone do
 
   desc "Task description"
   task :abcd => :environment do
-    d = nokopen("http://www.gsmarena.com/quicksearch-6376.jpg")
-    j = JSON.parse(d)
-    puts j[1][0]
+    # d = nokopen("http://www.gsmarena.com/quicksearch-6376.jpg")
+    Model.all.each do |m|
+      doc = nokopen(m.url)
+      popularity = doc.css(".help-popularity .accent").text.to_f
+      m.update(popularity: popularity) if popularity
+    end
   end
 
 
@@ -64,7 +67,7 @@ namespace :phone do
         ppi = x.css(".nfo").text[/\d*.ppi/].to_i
         eur = x.css(".price").text[/\d{1,4}/].to_i
         inr = EUR_TO_INR * eur
-        popularity = x.css(".specs-fans .accent").text[/\d{1,4}/].to_i
+        popularity = x.css(".help-popularity .accent").text.to_f
 
         m.update(price: setPrice(inr), size: setSize(size), ppi: setppi(ppi), camera: setCam(camera), ram: setRam(ram), battery: setBat(battery))
 
@@ -89,42 +92,6 @@ namespace :phone do
     puts "Done specs"
   end
 
-  task :title => :environment do
-
-    threads = []
-    Brand.all.each do |brand|
-      @ftime ||= Time.now
-      x = nokopen("http://www.gsmarena.com/results.php3?sQuickSearch=yes&sName=#{brand}")
-      x.css(".makers > ul > li").each do |model|
-        threads << Thread.new{title = model.xpath("a/img/@title").text
-        title.gsub!(/″/, "\"")
-        m = brand.models.find_by(name: (model.xpath("a/strong/span/text()[2]").text))
-        # m.update(title: title) if m
-        puts m.try(&:id)
-        }
-      end
-      puts Time.now.sec
-    end
-    puts Time.now - @ftime
-    threads.each(&:join)
-    t = Time.now - @ftime
-    puts t.round(2)
-
-    Brand.all.each do |brand|
-      @time ||= Time.now
-      x = nokopen("http://www.gsmarena.com/results.php3?sQuickSearch=yes&sName=#{brand}")
-      x.css(".makers > ul > li").each do |model|
-        title = model.xpath("a/img/@title").text
-        title.gsub!(/″/, "\"")
-        m = brand.models.find_by(name: (model.xpath("a/strong/span/text()[2]").text))
-        # m.update(title: title) if m
-        puts m.try(&:id)
-      end
-    end
-    t = Time.now - @time
-    puts t.round(2)
-
-  end
 
   desc "all"
   task :all => %i(add_brands add_models add_specs) do

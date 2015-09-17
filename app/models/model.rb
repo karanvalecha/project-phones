@@ -7,15 +7,19 @@ class Model < ActiveRecord::Base
   # enum memory: %w(ml mm mh)
   # enum ppi: %w(pl pm ph)
   scope :decent_media, -> {where(camera: 0, ram: 0)}
-  scope :hardcore_media, -> {where(camera: 1, ram:1, size: 1)}
+  scope :hardcore_media, -> {where(camera: 1, ram:1, size: 1).where("_price > 17000")}
+  scope :any_media, -> {where.not(camera: -1, price: 1)}
 
   scope :casual_gamer, -> {where(ram: 0, size: 0)}
-  scope :hardcore_gamer, -> {where(ram: 1, size: 1, battery: 1)}
+  scope :hardcore_gamer, -> {where(ram: 1, size: 1, battery: 1).where("_price > 17000")}
+  scope :any_gamer, -> {where.not(ram: -1, price: 1)}
 
   scope :casual_multitask, ->{where(ram: 0, battery: 0)}
-  scope :hardcore_multitask, ->{where(ram: 1, battery: 1, ppi: 1)}
+  scope :hardcore_multitask, ->{where(ram: 1, battery: 1, ppi: 1).where("_price > 17000")}
+  scope :any_multitask, -> {where.not(size: -1, price: 1)}
 
-  scope :randomize, ->{offset(rand(Model.count)).limit(1)}
+
+  scope :randomize, ->{order(price: :desc, popularity: :desc, features: :desc).limit(3)}
 
 
   def to_s
