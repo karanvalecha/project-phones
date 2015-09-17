@@ -119,7 +119,7 @@ var Models = React.createClass({
   },
   fullLoad: function(e){
   // $('#myModal').modal();
-  $("#img").toggle();
+  $("#img").show();
   $(window).off("scroll");
   var jqxhr = $.ajax({
     url: "all_json",
