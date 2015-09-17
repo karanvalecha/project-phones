@@ -46,7 +46,7 @@ namespace :phone do
     # d = nokopen("http://www.gsmarena.com/quicksearch-6376.jpg")
     Model.all.each do |m|
       doc = nokopen(m.url)
-      popularity = doc.css(".help-popularity .accent").text[/\d{1,2}/].to_f
+      popularity = doc.css(".help-popularity .accent").text[/^\d+(\.\d{1,2})?$/].to_f
       m.update(popularity: popularity) if popularity
     end
   end
