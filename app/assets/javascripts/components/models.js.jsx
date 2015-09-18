@@ -103,7 +103,7 @@ var Models = React.createClass({
   componentDidUpdate: function(){
     var x = this;
     $(window).on("scroll",function(){
-      if($(window).scrollTop() > $("#load").offset().top - $(window).height()*1.3){
+      if($(window).scrollTop() > $("#load").offset().top - $(window).height()*1.7){
         x.fullLoad();
       }
     });
@@ -112,7 +112,7 @@ var Models = React.createClass({
     var x = this;
     x.fullLoad();
     $(window).on("scroll",function(){
-      if($(window).scrollTop() > $("#load").offset().top - $(window).height()*1.3){
+      if($(window).scrollTop() > $("#load").offset().top - $(window).height()*1.7){
         x.fullLoad();
       }
     });

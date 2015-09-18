@@ -92,6 +92,8 @@ var SearchModels = React.createClass({
   },
   componentDidMount:function(){
   x = this;
+  $("#myForm").after("<center id = 'x'><img src='http://preloaders.net/preloaders/499/Balls%20parade.gif' /></center>")
+  $("#myForm").hide();
   $("#myForm").on("submit", function(e){
   e.preventDefault();
   var data = $('#myForm').serialize();
@@ -99,10 +101,14 @@ var SearchModels = React.createClass({
     url: "/search",
     data: data,
     success: function(models){
-    if(models.length)
+    if(models.length){
       x.setProps({models: models});
-    else
+    }
+    else{
+      $("#myForm").show();
+      $("#x").remove();
       alert("The specified feature was not found with preferences selected.");
+    }
     }.bind(this)
     });
   });
