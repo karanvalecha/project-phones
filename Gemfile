@@ -1,6 +1,7 @@
 
 source 'https://rubygems.org'
 
+gem 'jquery-ui-rails' #use jquery ui
 gem 'goog_currency'
 gem "react-rails"
 gem 'bootstrap-sass'
