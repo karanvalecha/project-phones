@@ -100,59 +100,40 @@ var ListItemWrapper = React.createClass({
 });
 var Models = React.createClass({
 
-  componentDidUpdate: function(){
-    var x = this;
-    $(window).on("scroll",function(){
-      if($(window).scrollTop() > $("#load").offset().top - $(window).height()*1.7){
-        x.fullLoad();
-      }
-    });
+  getInitialState: function(){
+    return {count_model: 5};
   },
+
   componentDidMount: function(){
-    var x = this;
-    x.fullLoad();
+    var _this = this;
     $(window).on("scroll",function(){
-      if($(window).scrollTop() > $("#load").offset().top - $(window).height()*1.7){
-        x.fullLoad();
+      if($(window).scrollTop() > $("#load").offset().top - $(window).height()*1.8){
+        if(_this.state.count_model < _this.props.models.length){
+          _this.setState({count_model: _this.state.count_model+3});
+        }else{
+          $(window).off("scroll")
+          $("#img").html("DOne");
+        }
       }
     });
-  },
-  fullLoad: function(e){
-  // $('#myModal').modal();
-  $("#img").show();
-  $(window).off("scroll");
-  var jqxhr = $.ajax({
-    url: "all_json",
-    data: "&offset=" + this.props.models.length,
-    dataType: 'json',
-    cache: true,
-    success: function(models){
-      if(models.length > 0){
-      this.setProps({models: this.props.models.concat(models)});
-    }else{
-      $("#img").before("<center>--No more phones to show--</center>");
-      $("#img").hide();
-    }
-    }.bind(this)
-  });
   },
   render: function() {
     return (
       <div>
         <Modal />
         <h2 className="text-center"><span className="label label-info" >Trending SmartPhones&#8628;</span></h2>
-        <div className="panel panel-info">
-        <div className="panel-body">
-      <ol>
-        {this.props.models.map(function(result) {
-           return <ListItemWrapper key={result.id} data={result}/>;
-        })}
-      </ol>
-      </div>
-      <center id="img"><img src='http://preloaders.net/preloaders/499/Balls%20parade.gif' /></center>
-      </div>
-      <hr id="load" />
-      </div>
+          <div className="panel panel-info">
+            <div className="panel-body">
+              <ol>
+                {this.props.models.slice(0, this.state.count_model).map(function(result) {
+                   return <ListItemWrapper key={result.id} data={result}/>;
+                })}
+              </ol>
+            </div>
+            <center id="img"><img src='http://preloaders.net/preloaders/499/Balls%20parade.gif' /></center>
+          </div>
+        <hr id="load" />
+        </div>
     );
   }
 });

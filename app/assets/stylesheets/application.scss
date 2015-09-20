@@ -17,7 +17,7 @@
 @import "bootstrap";
 @import "custom";
 
-.carousel-inner{
+#myCarousel .carousel-inner{
   max-height: 30px;
 }
 .carousel a {
@@ -25,6 +25,10 @@
   padding: 0; /*removing spacing*/
   margin: 0; /*add spacing*/
   font-size: 2.5rem;
+}
+
+#myForm .item{
+  min-height: 100px;
 }
 
 .btn-disabled{
@@ -42,4 +46,24 @@ img.media-object{
   max-height: 200px;
   // margin-top: 50px;
   // margin-bottom: 50px;
+}
+
+#SearchResults{
+  &:hover #clearResultsBtn{
+    display: block;
+    position: fixed;
+    transition: display 1s ease-in-out;
+    -webkit-transition: display 1s ease-in-out;
+    bottom: 1%;
+    right: 51%;
+  }
+}
+#clearResultsBtn{
+  display: none;
+  transition: display 1s;
+  -webkit-transition: display 1s ease-in-out;
+}
+
+body{
+  transition: all 0.3s ease 0s;
 }

@@ -12,7 +12,7 @@ initialize = ->
   feed.setNumEntries(21)
   feed.load (result) ->
     entries = shuffle(result.feed.entries)
-    car_inner = $(".carousel-inner")
+    car_inner = $("#myCarousel .carousel-inner")
     for res in [0..9]
       if res == 1 #raandom number
         car_inner.append("<a class='item active' href='#{entries[res].link}'>#{entries[res].title}</a>")
