@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "compare_data" => "phones#compare_data"
+  get "compare_model/:id" => "phones#compare_model"
   get 'all_json' => 'phones#json_model'
   get 'find' => 'phones#find'
   get 'search' => 'phones#search'

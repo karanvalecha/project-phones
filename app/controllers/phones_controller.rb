@@ -4,8 +4,16 @@ class PhonesController < ApplicationController
     @models = Model.order(popularity: :desc)
   end
 
+  def compare_data
+    render json: Model.joins(:brand).select("models.id, brands.name || ' ' || models.name as 'label'").to_json
+  end
+
+  def compare_model
+    render json: Model.find(params[:id]).to_json
+  end
+
   def json_model
-    render json: Model.order(popularity: :desc).offset(params[:offset]).limit(7).to_json
+    render json: Model.order(popularity: :desc).to_json
   end
 
 
@@ -23,12 +31,6 @@ class PhonesController < ApplicationController
       @models << Model.check(Model.any_media.limit(3), price, features)
     end
 
-    # if params[:price].present?
-    #   @models << m.where("features like '%#{params[:feature]}%'").where("_price < #{params[:price].to_i + 1500}").limitize if m
-    # else
-    #   @models << m.where("features like '%#{params[:feature]}%'").limitize if m
-    # end
-
     case params[:game_user]
     when "1"
       @models << Model.check(Model.casual_gamer.limit(3), price, features)
@@ -37,12 +39,6 @@ class PhonesController < ApplicationController
     when "0"
       @models << Model.check(Model.any_gamer.limit(3), price, features)
     end
-
-    # if params[:price].present?
-    #   @models << m.where("features like '%#{params[:feature]}%'").where("_price < #{params[:price].to_i + 1500}").limitize if m
-    # else
-    #   @models << m.where("features like '%#{params[:feature]}%'").limitize if m
-    # end
 
     case params[:multitask_user]
     when "1"
@@ -53,11 +49,6 @@ class PhonesController < ApplicationController
       @models << Model.check(Model.any_multitask.limit(3), price, features)
     end
 
-    # if params[:price].present?
-    #   @models << m.where("features like '%#{params[:feature]}%'").where("_price < #{params[:price].to_i + 1500}").limitize if m
-    # else
-    #   @models << m.where("features like '%#{params[:feature]}%'").limitize if m
-    # end
     @models.flatten!
     @models = @models.size < 1 ? Model.check(Model, price, features) : @models
     # @models = @models.sort{|a,b| b[:popularity] <=> a[:popularity]}

@@ -56,7 +56,12 @@ img.media-object{
     transition: display 1s ease-in-out;
     -webkit-transition: display 1s ease-in-out;
     bottom: 1%;
-    right: 51%;
+    left: 50%;
+    right: 50%;
+    font-weight: bolder;
+    background-color: yellow;
+    color: black;
+    text-decoration: underline;
   }
 }
 #clearResultsBtn{

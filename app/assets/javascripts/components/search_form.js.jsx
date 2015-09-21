@@ -159,7 +159,7 @@ var SearchModels = React.createClass({
               })}
             </ol>
           </div>
-        <button id="clearResultsBtn" hidden className="btn btn-danger" onClick={this.reset} > Clear these results </button>
+        <button id="clearResultsBtn" hidden className="btn btn-link" onClick={this.reset} > Clear these results </button>
         </div>
       </div>
     );

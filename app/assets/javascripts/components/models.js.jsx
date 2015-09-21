@@ -2,7 +2,7 @@ function createMarkup(param) { return {__html: param}; };
 
 var SwfButton = React.createClass({
   click: function(){
-    $(".modal-title").html(this.props.title + " (Creedits: GSMArena)");
+    $(".modal-title").html(this.props.title + " (Credits: GSMArena)");
     $(".modal-body").html("<center><embed src='"+this.props.src+"'></embed></center>");
     $("#myModal").modal();
   },
@@ -103,21 +103,32 @@ var Models = React.createClass({
   getInitialState: function(){
     return {count_model: 5};
   },
-
+  getDefaultProps: function(){
+    return {models: []};
+  },
   componentDidMount: function(){
     var _this = this;
-    $(window).on("scroll",function(){
+    $.ajax({
+      url: "all_json",
+      success: function(models){
+        _this.setProps({models: models});
+        $(window).on("scroll",function(){
       if($(window).scrollTop() > $("#load").offset().top - $(window).height()*1.8){
         if(_this.state.count_model < _this.props.models.length){
           _this.setState({count_model: _this.state.count_model+3});
         }else{
           $(window).off("scroll")
-          $("#img").html("DOne");
+          $("#img").html("--FINISH--");
         }
       }
     });
+      }.bind(this)
+    });
   },
   render: function() {
+    if(this.props.models == undefined || !this.props.models){
+      return <center><img src='http://preloaders.net/preloaders/499/Balls%20parade.gif' /></center>
+    }
     return (
       <div>
         <Modal />

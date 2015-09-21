@@ -1,6 +1,8 @@
 class Model < ActiveRecord::Base
   belongs_to :brand
 
+  attr_reader :full_name
+
   # enum camera: %w(cl cm ch)
   # enum display: %w(dl dm dh)
   # enum battery: %w(bl bm bh)
@@ -20,6 +22,10 @@ class Model < ActiveRecord::Base
 
 
   scope :limitize, ->{limit(3)}
+
+  def full_name
+    self.brand.name + " #{self.name}"
+  end
 
   def Model.check(model, price, feature)
     if price.to_i > 0
