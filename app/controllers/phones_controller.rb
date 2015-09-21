@@ -5,15 +5,15 @@ class PhonesController < ApplicationController
   end
 
   def compare_data
-    render json: Model.joins(:brand).select("models.id, brands.name || ' ' || models.name as 'label'").to_json
+    render json: Model.joins(:brand).select("models.id, brands.name || ' ' || models.name as 'label'").as_json
   end
 
   def compare_model
-    render json: Model.find(params[:id]).to_json
+    render json: Model.find(params[:id]).as_json
   end
 
   def json_model
-    render json: Model.order(popularity: :desc).to_json
+    render json: Model.order(popularity: :desc).as_json
   end
 
 
