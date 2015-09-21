@@ -5,7 +5,7 @@ class PhonesController < ApplicationController
   end
 
   def compare_data
-    render json: Model.joins(:brand).select("models.id, brands.name || ' ' || models.name as 'label'").as_json
+    render json: Model.joins(:brand).select("models.id, brands.name || ' ' || models.name as label").as_json
   end
 
   def compare_model
