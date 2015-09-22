@@ -50,18 +50,19 @@ img.media-object{
 }
 
 #SearchResults{
-  &:hover #clearResultsBtn{
-    display: block;
-    position: fixed;
-    transition: display 1s ease-in-out;
-    -webkit-transition: display 1s ease-in-out;
-    bottom: 1%;
-    left: 50%;
-    right: 50%;
-    font-weight: bolder;
-    background-color: yellow;
-    color: black;
-    text-decoration: underline;
+  &:hover {
+    #clearResultsBtn{
+      display: block;
+      position: fixed;
+      transition: display 1s ease-in-out;
+      -webkit-transition: display 1s ease-in-out;
+      bottom: 10%;
+      right: 0%;
+      font-weight: bolder;
+      background-color: yellow;
+      color: tomato-red;
+      text-decoration: underline;
+    }
   }
 }
 #clearResultsBtn{
@@ -72,4 +73,61 @@ img.media-object{
 
 body{
   transition: all 0.3s ease 0s;
+}
+
+// -- jq-autocomplete --
+.ui-autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  float: left;
+  display: none;
+  min-width: 160px;
+  _width: 160px;
+  padding: 4px 0;
+  margin: 2px 0 0 0;
+  list-style: none;
+  background-color: #ffffff;
+  border-color: #ccc;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+  *border-right-width: 2px;
+  *border-bottom-width: 2px;
+
+  li.ui-menu-item {
+    display: block;
+    padding: 3px 15px;
+    clear: both;
+    font-weight: normal;
+    line-height: 18px;
+    color: #555555;
+    white-space: nowrap;
+    &:hover{
+      color: white;
+    }
+  }
+
+  .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #0088cc;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    background-image: none;
+    a{
+      color: white;
+    }
+  }
 }

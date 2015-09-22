@@ -97,6 +97,7 @@ render: function(){
 var SearchModels = React.createClass({
   reset:function() {
     this.setProps({models: null});
+    $('html, body').animate({ scrollTop: $("#SearchForm").offset().top });
   },
   formSearch: function(){
   $("#myForm input[type='radio']").on("click", function(){
@@ -107,11 +108,11 @@ var SearchModels = React.createClass({
     }
   });
 
-  $('html, body').animate({ scrollTop: $("#feed").offset().top });
   x = this;
   $("#myForm").on("submit", function(e){
   $("#myForm").hide();
   $("#x").show();
+  $('html, body').animate({ scrollTop: $("#x").offset().top - 60 });
   e.preventDefault();
   var data = $('#myForm').serialize();
   var jqxhr = $.ajax({

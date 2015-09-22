@@ -6,8 +6,13 @@
       .carousel-inner
         %img#loading{:src => "http://preloaders.net/preloaders/499/Balls%20parade.gif", :alt => ""}/
 
+
+  %hr/
+  = react_component("Compare")
+  %hr/
+
   = react_component("SearchModels", {models: nil})
 
-  = react_component("Compare")
+  %hr/
 
   = react_component('Models', {models: []})

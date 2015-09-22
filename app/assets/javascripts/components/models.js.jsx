@@ -132,9 +132,9 @@ var Models = React.createClass({
     return (
       <div>
         <Modal />
-        <h2 className="text-center"><span className="label label-info" >Trending SmartPhones&#8628;</span></h2>
+        <h2><span className="label label-info" >Top Trending SmartPhones this week&#8628;</span></h2>
           <div className="panel panel-info">
-            <div className="panel-body">
+            <div className="panel-body" id="models_body">
               <ol>
                 {this.props.models.slice(0, this.state.count_model).map(function(result) {
                    return <ListItemWrapper key={result.id} data={result}/>;
