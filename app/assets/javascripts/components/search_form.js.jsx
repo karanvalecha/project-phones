@@ -120,6 +120,7 @@ var SearchModels = React.createClass({
     data: data,
     success: function(models){
       if(models.length){
+        models = models.sort(function(a,b){return b._price - a._price; });
         x.setProps({models: models});
       }else{
         $("#myForm").show();

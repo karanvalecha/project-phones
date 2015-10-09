@@ -59,17 +59,51 @@ img.media-object{
       bottom: 10%;
       right: 0%;
       font-weight: bolder;
-      background-color: yellow;
+      background-color: red;
       color: tomato-red;
       text-decoration: underline;
     }
   }
 }
-#clearResultsBtn{
+#models{
+  &:hover {
+    #clearModelsBtn{
+      display: block;
+      position: fixed;
+      transition: display 1s ease-in-out;
+      -webkit-transition: display 1s ease-in-out;
+      bottom: 10%;
+      right: 0%;
+      font-weight: bolder;
+      background-color: green;
+      color: tomato-red;
+      text-decoration: underline;
+    }
+  }
+}
+#compare_models{
+  &:hover {
+    #clearCompareBtn{
+      display: block;
+      position: fixed;
+      transition: display 1s ease-in-out;
+      -webkit-transition: display 1s ease-in-out;
+      bottom: 10%;
+      right: 0%;
+      font-weight: bolder;
+      background-color: blue;
+      color: tomato-red;
+      text-decoration: underline;
+    }
+  }
+}
+#clearResultsBtn, #clearModelsBtn, #clearCompareBtn{
   display: none;
   transition: display 1s;
   -webkit-transition: display 1s ease-in-out;
 }
+
+
 
 body{
   transition: all 0.3s ease 0s;

@@ -2,7 +2,7 @@ function createMarkup(param) { return {__html: param}; };
 
 var SwfButton = React.createClass({
   click: function(){
-    $(".modal-title").html(this.props.title);
+    $(".modal-title").html("Drag to " + this.props.title);
     $(".modal-body").html("<center><embed src='"+this.props.src+"'></embed></center>");
     $("#myModal").modal();
   },
@@ -89,7 +89,7 @@ var ListItemWrapper = React.createClass({
         <p>{model.title}</p>
         <p>Priced about <u>&#8377; {model._price}</u></p>
         <div className="row">
-          <span className="col-sm-3"><SwfButton src={model.swf} title="Drag the image to spin 360°" /> </span>
+          <span className="col-sm-3"><SwfButton src={model.swf} title="Rotate 360°" /> </span>
           <span className="col-sm-3"><SpecButton specs={model.spec_sheet} title="Specifications" /> </span>
           <span className="col-sm-3"><MainFeaturesButton features={model.features} title="Key Features" /> </span>
           <span className="col-sm-3"><DisadvantagesButton disadvantages={model.disadvantages} title="Disadvantages" /></span>
@@ -105,6 +105,10 @@ var Models = React.createClass({
   },
   getDefaultProps: function(){
     return {models: []};
+  },
+  reset: function(){
+    this.setState({count_model: 1});
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   },
   componentDidMount: function(){
     var _this = this;
@@ -130,7 +134,7 @@ var Models = React.createClass({
       return <center><img src='http://preloaders.net/preloaders/499/Balls%20parade.gif' /></center>
     }
     return (
-      <div>
+      <div id="models">
         <Modal />
         <h2><span className="label label-info" >Top Trending SmartPhones this week&#8628;</span></h2>
           <div className="panel panel-info">
@@ -140,6 +144,7 @@ var Models = React.createClass({
                    return <ListItemWrapper key={result.id} data={result}/>;
                 })}
               </ol>
+              <button id="clearModelsBtn" hidden className="btn btn-link" onClick={this.reset} > Back To Top </button>
             </div>
             <center id="img"><img src='http://preloaders.net/preloaders/499/Balls%20parade.gif' /></center>
           </div>

@@ -67,18 +67,24 @@ var Compare = React.createClass({
     TempData.pop();
     this.setState({CompareData: TempData});
   },
+  reset: function (argument) {
+    this.setState({CompareData: [{}]});
+    $('html, body').animate({ scrollTop: $("#compare_models").offset().top });
+    $("#compare_models input")[0].focus();
+  },
   render: function () {
     _this = this;
     return(
       <div id="compare_models" className="row">
-      <center>{_this.state.CompareData.length < 2 ? <span>Compare Mode is OFF<button className="btn btn-link" onClick={this.compareBtn}> Turn ON </button> </span> : <span>Compare Mode is ON<button className="btn btn-link" onClick={this.searchBtn}> Turn OFF </button> </span> }</center>
+      <center>{_this.state.CompareData.length < 2 ? <h3><button disabled className="label"> Search </button><button className="label label-success" onClick={this.compareBtn} >Compare</button> </h3> : <h3><button className="label label-success" onClick={this.searchBtn}> Search </button><button className="label" disabled>Compare</button> </h3> }</center>
         {this.state.CompareData.map( function(model, index){
         return(
-        <div key={index} id="compare_body" className={_this.state.CompareData.length < 2 ? "col-md-offset-2 col-md-8" : "col-md-6"}>
+        <div key={index} className="compare_body" className={_this.state.CompareData.length < 2 ? "col-md-offset-2 col-md-8" : "col-md-6"}>
           <input placeholder={index == 1 ? "Compare With" : "Search"} className="form-control" id={'searchCompare' + index} type="text" /><br />
           { model.id != undefined ? <CompareItemWrapper data={model} />: <div></div>}
           { model.id != undefined ? <div height="90vh" className="col-md-12" dangerouslySetInnerHTML={{__html: model.spec_sheet}} /> : <div></div>}
         </div>);})}
+        <button id="clearCompareBtn" hidden className="btn btn-link" onClick={this.reset} > Reset </button>
       </div>
       );
   }
