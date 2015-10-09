@@ -3,6 +3,9 @@ class Model < ActiveRecord::Base
 
   attr_reader :full_name
 
+  @@like = Rails.env.production? ? "ilike" : "like"  #For Postgres non case-sensitive like operator in production
+
+
   # enum camera: %w(cl cm ch)
   # enum display: %w(dl dm dh)
   # enum battery: %w(bl bm bh)
@@ -29,19 +32,20 @@ class Model < ActiveRecord::Base
 
   def Model.check(model, price, feature)
     if price.to_i > 0
-      model.where("features like '%#{feature}%'").where("_price < #{price.to_i + 1500}").order(_price: :desc)
+      model.where("features #{@@like} '%#{feature}%'").where("_price < #{price.to_i + 1500}").order(_price: :desc)
     else
-      model.where("features like '%#{feature}%'").order(:_price)
+      model.where("features #{@@like} '%#{feature}%'").order(:_price)
     end
   end
   def to_s
     puts name
   end
 
-  (1..3).each do |action|
-    define_method("price_#{action}") do
-      _price.round(-action).to_s
-    end
-  end
+
+#  (1..3).each do |action|
+#    define_method("price_#{action}") do
+#      _price.round(-action).to_s
+#    end
+#  end // meta-programming to round off amount
 
 end
